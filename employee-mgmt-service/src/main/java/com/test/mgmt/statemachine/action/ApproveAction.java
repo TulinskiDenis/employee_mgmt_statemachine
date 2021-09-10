@@ -22,9 +22,9 @@ public class ApproveAction implements Action<States, Events> {
     @Override
     public void execute(StateContext<States, Events> context) {
         LOG.debug("Approve action");
-        String id = context.getExtendedState().get("id", String.class);
+        Long id = context.getExtendedState().get("id", Long.class);
 
-        Response response = employeeServiceClient.updateState(Long.valueOf(id), States.APPROVED.toString());
+        Response response = employeeServiceClient.updateState(id, States.APPROVED.toString());
         if (!response.isSuccessful()) {
             throw new RuntimeException("Approve operation failed");
         }

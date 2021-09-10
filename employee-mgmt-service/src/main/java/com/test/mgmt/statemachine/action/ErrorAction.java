@@ -16,7 +16,7 @@ public class ErrorAction implements Action<States, Events> {
     @Override
     public void execute(StateContext<States, Events> context) {
         LOG.error("Error action");
-        /// set error here to be caught and logged by
+        /// set error here to be caught by listener and logged by
         /// LoggingEventsListenerAdapter.stateMachineError
         context.getStateMachine().setStateMachineError(context.getException());
     }

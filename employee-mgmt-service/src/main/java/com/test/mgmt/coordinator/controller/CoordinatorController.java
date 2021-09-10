@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.mgmt.coordinator.client.EmployeeServiceClient;
 import com.test.mgmt.coordinator.dto.EmployeeDto;
 import com.test.mgmt.coordinator.dto.Response;
 import com.test.mgmt.statemachine.Events;
@@ -26,6 +27,9 @@ public class CoordinatorController {
     @Autowired
     StateMachineCommandHandler stateMachineCommandHandler;
 
+    @Autowired
+    private EmployeeServiceClient employeeServiceClient;
+
     @ExceptionHandler(Exception.class)
     protected Response handleException(Exception ex) {
         LOG.error("System error: ", ex);
@@ -35,15 +39,14 @@ public class CoordinatorController {
     @ApiOperation(value = "Add employee", response = Response.class)
     @PostMapping
     public Response addEmployee(@RequestBody EmployeeDto employee) {
-        stateMachineCommandHandler.handleEvent(Events.ADD, employee.getId().toString(), employee);
-        return Response.of(0, "ok");
+        return employeeServiceClient.add(employee);
     }
 
     @ApiOperation(value = "Update employee state", response = Response.class)
     @PutMapping("{id}/{action}")
-    public Response updateEmployeeState(@PathVariable String id, @PathVariable Events action) {
-        stateMachineCommandHandler.handleEvent(action, id, null);
-        return Response.of(0, "ok");
+    public Response updateEmployeeState(@PathVariable Long id, @PathVariable Events action) {
+        stateMachineCommandHandler.handleEvent(action, id);
+        return Response.of(0, "Request sent");
 
     }
 

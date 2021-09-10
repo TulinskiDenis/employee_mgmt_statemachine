@@ -22,9 +22,9 @@ public class ActivateAction implements Action<States, Events> {
     @Override
     public void execute(StateContext<States, Events> context) {
         LOG.debug("Activate action");
-        String id = context.getExtendedState().get("id", String.class);
+        Long id = context.getExtendedState().get("id", Long.class);
 
-        Response response = employeeServiceClient.updateState(Long.valueOf(id), States.ACTIVE.toString());
+        Response response = employeeServiceClient.updateState(id, States.ACTIVE.toString());
         if (!response.isSuccessful()) {
             throw new RuntimeException("Activate operation failed");
         }

@@ -18,21 +18,25 @@ public class EmployeeService {
     @Autowired
     private EmployeeDao employeRepository;
 
-    public void add(Employee employee) {
+    public Long add(Employee employee) {
         Employee savedEntity = employeRepository.save(employee);
         LOG.debug("Employee added: {}", savedEntity);
+        return savedEntity.getId();
     }
 
-    public void updateState(Long employeeId, String state) {
+    public boolean updateState(Long employeeId, String state) {
         Optional<Employee> optional = employeRepository.findById(employeeId);
 
-        optional.ifPresentOrElse(
-                employee -> {
-                    employee.setState(state);
-                    employeRepository.save(employee);
-                    LOG.debug("Employee state updated: state = [{}]", state);
-                },
-                () -> LOG.debug("Employee not found: id = [{}]", employeeId));
+        if (optional.isPresent()) {
+            Employee employee = optional.get();
+            employee.setState(state);
+            employeRepository.save(employee);
+            LOG.debug("Employee state updated: state = [{}]", state);
+            return true;
+        }
+
+        LOG.debug("Employee not found: id = [{}]", employeeId);
+        return false;
 
     }
 

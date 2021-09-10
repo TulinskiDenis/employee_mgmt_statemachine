@@ -21,16 +21,10 @@ public class StateMachineCommandHandler {
     @Autowired
     private StateMachineProvider stateMachineService;
 
-    public void handleEvent(Events event, String id, Object employee) {
+    public void handleEvent(Events event, Long id) {
         final StateMachine<States, Events> stateMachine = stateMachineService.getStateMachine(id);
-        if (employee != null) {
-            stateMachine.getExtendedState().getVariables().put("employee", employee);
-        }
-        stateMachine.getExtendedState().getVariables().put("id", id);
-
 
         Message<Events> eventToDispatch = MessageBuilder.withPayload(event).build();
-
         stateMachine.sendEvent(Mono.just(eventToDispatch))
                 .doOnComplete(() -> {
                     LOG.debug("Event handling complete");

@@ -79,6 +79,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <dependency>
+		    <groupId>org.springframework.statemachine</groupId>
+		    <artifactId>spring-statemachine-test</artifactId>
+		    <version>${spring-statemachine-starter.version}</version>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -22,9 +22,9 @@ public class CheckAction implements Action<States, Events> {
     @Override
     public void execute(StateContext<States, Events> context) {
         LOG.debug("Check action");
-        String id = context.getExtendedState().get("id", String.class);
+        Long id = context.getExtendedState().get("id", Long.class);
 
-        Response response = employeeServiceClient.updateState(Long.valueOf(id), States.IN_CHECK.toString());
+        Response response = employeeServiceClient.updateState(id, States.IN_CHECK.toString());
         if (!response.isSuccessful()) {
             throw new RuntimeException("Check operation failed");
         }

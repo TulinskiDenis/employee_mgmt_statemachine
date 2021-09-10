@@ -24,14 +24,14 @@ public class EmployeeController {
 
     @ExceptionHandler(Exception.class)
     protected Response handleException(Exception ex) {
-        LOG.error("System erro: ", ex);
+        LOG.error("System error: ", ex);
         return Response.of(9, ex.getMessage());
     }
 
     @PostMapping
     public Response addEmployee(@RequestBody Employee employee) {
-        employeeService.add(employee);
-        return Response.of(0, "ok");
+        Long id = employeeService.add(employee);
+        return Response.of(0, "Employee ID = [ " + id + " ]");
     }
 
     @PutMapping("/{id}")

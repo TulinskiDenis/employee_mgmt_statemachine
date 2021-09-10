@@ -24,7 +24,6 @@ import org.springframework.statemachine.service.DefaultStateMachineService;
 import org.springframework.statemachine.service.StateMachineService;
 
 import com.test.mgmt.statemachine.action.ActivateAction;
-import com.test.mgmt.statemachine.action.AddAction;
 import com.test.mgmt.statemachine.action.ApproveAction;
 import com.test.mgmt.statemachine.action.CheckAction;
 import com.test.mgmt.statemachine.action.ErrorAction;
@@ -75,12 +74,6 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     public void configure(StateMachineTransitionConfigurer<States, Events> transitions)
             throws Exception {
         transitions
-            .withExternal()
-                .source(States.ADDED)
-                .target(States.ADDED)
-                .event(Events.ADD)
-                .action(actions().get(AddAction.class), actions().get(ErrorAction.class))
-                .and()
             .withExternal()
                 .source(States.ADDED)
                 .target(States.IN_CHECK)
