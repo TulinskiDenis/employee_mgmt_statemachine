@@ -1,0 +1,20 @@
+server:
+  port: 9000
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        data: debug
+    com.test: debug  
+spring:
+  application:
+    name: employee-service
+  datasource:
+    url:   jdbc:h2:mem:testdb
+  h2:
+    console:
+      path: /db-employees
+      enabled: true
+      settings:
+        web-allow-others: true

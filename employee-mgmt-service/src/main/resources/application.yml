@@ -1,0 +1,21 @@
+server:
+  port: 8000
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        data: debug
+        statemachine: debug
+    com.test: debug  
+spring:
+  application:
+    name: employee-mgmt-service
+  datasource:
+    url:   jdbc:h2:mem:testdb
+  h2:
+    console:
+      path: /db-statemachine
+      enabled: true
+      settings:
+        web-allow-others: true
