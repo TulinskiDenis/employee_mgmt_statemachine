@@ -14,7 +14,6 @@ Add employee request exaample:
 POST http://localhost:8000/api/v1/employees
 Body:
 {
-    "id": 1,
     "name": "A",
     "age": 33
 }
